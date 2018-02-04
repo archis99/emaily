@@ -26,6 +26,8 @@ passport.use(new GoogleStrategy({
     .then( exisistingUser => {
         if(exisistingUser){
             done(null, exisistingUser);
+            //Debug Console
+            console.log(exisistingUser);
         }
         else{
             new User({ googleId: profile.id}).save()
