@@ -21,17 +21,17 @@ passport.use(new GoogleStrategy({
     callbackURL: '/auth/google/callback',
     proxy: true
 }, 
-(accessToken,refreshToken,profile,done) => {
-    User.findOne({googleId: profile.id})
-    .then( exisistingUser => {
-        if(exisistingUser){
-            done(null, exisistingUser);
-            //Debug Console
-            console.log(exisistingUser);
-        }
-        else{
-            new User({ googleId: profile.id}).save()
-            .then(user => done(null, user));
-        }
-    });
+//Changes with async/await syntax instead of .then()
+async (accessToken,refreshToken,profile,done) => {
+    const exisistingUser = await User.findOne({googleId: profile.id});
+    if(exisistingUser){
+        //Debug Console
+        console.log(exisistingUser);
+        //done function (method of Passport) with exisisting User
+        return done(null, exisistingUser);
+    }
+
+    const user = await new User({ googleId: profile.id}).save();
+    //done function (method of Passsport) with new user
+    done(null, user);
 }));
