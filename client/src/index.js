@@ -1,4 +1,5 @@
 //Data Layer Control
+import 'materialize-css/dist/css/materialize.min.css';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
